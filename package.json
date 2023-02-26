@@ -1,0 +1,17 @@
+{
+	"name": "beneficial-binary",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"astro": "^2.0.15",
+		"bitecs": "^0.3.38",
+		"phaser": "^3.60.0-beta.19"
+	}
+}
