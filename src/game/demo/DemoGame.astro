@@ -1,0 +1,26 @@
+---
+import PhaserGame from "components/PhaserGame.astro";
+import DemoScene from "game/demo/DemoScene";
+
+export type Props = Record<string, never>;
+
+const {} = Astro.props;
+---
+
+<PhaserGame
+  style={{ height: "100%", width: "100%" }}
+  config={{
+    type: Phaser.AUTO,
+    scale: DemoScene.Scaling,
+    transparent: false,
+    // backgroundColor: "#00FF00",
+  }}
+/>
+
+<script>
+  import { PhaserGameDivElement } from "../../components/PhaserGameElement";
+  import DemoScene from "./DemoScene";
+
+  const element = document.getElementById("demo-game") as PhaserGameDivElement;
+  element.start("demo-game", new DemoScene(), true);
+</script>

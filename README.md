@@ -9,12 +9,22 @@ An opinionated starter project for making a Phaser game with Astro! Preinstalled
   - [Docs](https://photonstorm.github.io/phaser3-docs/index.html)
   - 3.60+ (Some great changes in this version)
 - [(Game Design Pattern) bitECS](https://github.com/NateTheGreatt/bitECS)
+  - Get started with
 - [Example Assets](https://opengameart.org/content/tiny-16-basic)
-  - Authored by [Sharm](https://opengameart.org/users/sharm)
+  - Created by [Lanea Zimmerman](https://opengameart.org/users/sharm)
 
 _Not installed, but highly recommended!_
 
 - [(Styling) Tailwind CSS](https://docs.astro.build/en/guides/integrations-guide/tailwind/)
+
+## Why Astro?
+
+Astro is a lightweight but powerful build tool that can add a lot of features. You can easily mix and
+match normal web pages with your game, or even write your game UI in HTML with ease. Not interested in
+using Astro? Here's a more applicable starter that provides a much of the tooling that Astro does
+without those pesky opinions!
+
+[https://github.com/ourcade/phaser3-typescript-vite-template](https://github.com/ourcade/phaser3-typescript-vite-template).
 
 ## 🚀 Project Structure
 
