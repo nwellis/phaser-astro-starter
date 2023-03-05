@@ -14,19 +14,18 @@ const {} = Astro.props;
     display: "flex",
     justifyContent: "center",
   }}
-  config={{
-    // backgroundColor: "0x00FF00",
-  }}
 />
 
 <script>
-  import { PhaserGameDivElement } from "../../components/PhaserGameElement";
+  import { PhaserGameElement } from "../../components/PhaserGameElement";
   import DemoScene from "./DemoScene";
 
-  window.customElements.whenDefined(PhaserGameDivElement.HTML_TAG).then(() => {
-    const element = document.getElementById(
-      "demo-game"
-    ) as PhaserGameDivElement;
-    element.start("demo-game", new DemoScene(), true);
+  window.customElements.whenDefined(PhaserGameElement.HTML_TAG).then(() => {
+    const element = document.getElementById("demo-game") as PhaserGameElement;
+    element
+      .startGame({
+        scale: DemoScene.Scaling,
+      })
+      .addScene(element.id, new DemoScene(), true);
   });
 </script>

@@ -5,6 +5,13 @@ import { Position, Rotation, Velocity } from "game/_common/components/Physics";
 import { Sprite } from "game/_common/components/Sprite";
 import { mkSpriteSystem } from "game/_common/systems/Sprite";
 
+function invertKvp(record: Record<string, number> = {}) {
+  return Object.keys(record).reduce((inverted, strKey) => {
+    inverted[record[strKey]] = strKey;
+    return inverted;
+  }, {} as Record<number, string>);
+}
+
 export const TextureIds = {
   tilesheet: 0,
   foobar: 1,
@@ -14,11 +21,20 @@ export type TextureKey = keyof typeof TextureIds;
 export default class DemoScene extends BaseScene {
   private static Width = 16 * 16; // 1024
   private static Height = 16 * 10; // 640
+
   static Scaling: Phaser.Types.Core.ScaleConfig = {
     mode: Phaser.Scale.ENVELOP,
     autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
     width: this.Width,
     height: this.Height,
+    min: {
+      width: this.Width / 4,
+      height: this.Height / 4,
+    },
+    max: {
+      width: this.Width,
+      height: this.Height,
+    },
   };
 
   protected world: IWorld;
@@ -29,12 +45,7 @@ export default class DemoScene extends BaseScene {
   protected cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
   constructor() {
-    super({
-      // type: Phaser.AUTO,
-      // scale: DemoScene.Scaling,
-      // transparent: false,
-      // backgroundColor: "#00FF00",
-    });
+    super();
   }
 
   init() {
@@ -55,7 +66,7 @@ export default class DemoScene extends BaseScene {
     super.create();
     this.world = createWorld();
 
-    this.systems.sprite = mkSpriteSystem(this, TextureIds);
+    this.systems.sprite = mkSpriteSystem(this, invertKvp(TextureIds));
 
     this.addTile(this.scale.width / 2, this.scale.height / 2);
 

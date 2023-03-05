@@ -1,22 +1,17 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import type { Types } from "phaser";
+// import type { Types } from "phaser";
 
-export interface Props extends HTMLAttributes<"div"> {
-  config: Types.Core.GameConfig;
-}
+export interface Props extends HTMLAttributes<"div"> {}
 
-const { config, ...rest } = Astro.props;
+const { ...rest } = Astro.props;
 ---
 
 <!-- https://docs.astro.build/en/guides/client-side-scripts/#pass-frontmatter-variables-to-scripts -->
-<phaser-game game-config={JSON.stringify(config)} {...rest}></phaser-game>
+<phaser-game {...rest}></phaser-game>
 
 <script>
-  import { PhaserGameDivElement } from "./PhaserGameElement";
+  import { PhaserGameElement } from "./PhaserGameElement";
 
-  window.customElements.define(
-    PhaserGameDivElement.HTML_TAG,
-    PhaserGameDivElement
-  );
+  window.customElements.define(PhaserGameElement.HTML_TAG, PhaserGameElement);
 </script>

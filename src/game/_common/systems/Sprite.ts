@@ -24,6 +24,7 @@ export const mkSpriteSystem = (
       const textureId = Sprite.textureId[eid];
       const texture = textures[textureId];
 
+      console.log("MAKING SPRITE", textureId, textures, texture);
       scene.sprites.set(eid, scene.add.sprite(0, 0, texture));
     }
 

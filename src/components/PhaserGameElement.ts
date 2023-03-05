@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export class PhaserGameDivElement extends HTMLElement {
+export class PhaserGameElement extends HTMLElement {
   static readonly HTML_TAG = "phaser-game";
   static get observedAttributes() {
     return ["game-config"];
@@ -13,58 +13,45 @@ export class PhaserGameDivElement extends HTMLElement {
     super();
   }
 
-  attributeChangedCallback(name, prev, next) {
-    switch (name) {
-      case "game-config": {
-        if (!next) {
-          this.config = undefined;
-          this.game?.destroy(false);
-          break;
-        }
+  startGame(partialConfig: Partial<Phaser.Types.Core.GameConfig> = {}) {
+    this.stopGame();
 
-        try {
-          console.log(`Parsing`, next);
-          const partialConfig = next ? JSON.parse(next) : {};
-          this.config = {
-            type: Phaser.AUTO,
-            parent: this,
-            antialias: false,
-            antialiasGL: false,
-            banner: import.meta.env.DEV,
-            ...partialConfig,
-          };
+    this.config = {
+      type: Phaser.AUTO,
+      parent: this,
+      antialias: false,
+      antialiasGL: false,
+      banner: import.meta.env.DEV,
+      ...partialConfig,
+    };
+    this.game = new Phaser.Game(this.config);
 
-          this.game?.destroy(false);
-          this.game = new Phaser.Game(this.config);
-        } catch (err) {
-          console.error(`Failed to parse Phaser  config`, err);
-          this.config = {};
-        }
-      }
-    }
+    return this;
   }
 
-  start(...args: Parameters<typeof this.game.scene.add>) {
-    if (this.game.scene.keys[args[0]]) {
-      return;
+  stopGame() {
+    this.config = {};
+    this.game?.destroy(false);
+    this.game = undefined;
+
+    return this;
+  }
+
+  addScene(...args: Parameters<typeof this.game.scene.add>) {
+    if (this.game?.scene.keys[args[0]]) {
+      return this;
     }
+
     this.game.scene.add(...args);
+
+    return this;
   }
 
-  // private config: Phaser.Types.Core.GameConfig;
-  // get config(): Phaser.Types.Core.GameConfig {
-  //   if (this._config) {
-  //     return this._config;
-  //   }
+  destroyScene(key: string) {
+    if (!this.game) return this;
 
-  //   try {
-  //     this.id;
-  //     this._config = this.dataset.config ? JSON.parse(this.dataset.config) : {};
-  //   } catch (err) {
-  //     console.error();
-  //     this._config = {};
-  //   }
+    this.game.scene.remove(key);
 
-  //   return this._config;
-  // }
+    return this;
+  }
 }
