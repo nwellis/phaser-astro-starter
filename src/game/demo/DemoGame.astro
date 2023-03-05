@@ -1,6 +1,5 @@
 ---
 import PhaserGame from "components/PhaserGame.astro";
-import DemoScene from "game/demo/DemoScene";
 
 export type Props = Record<string, never>;
 
@@ -8,12 +7,15 @@ const {} = Astro.props;
 ---
 
 <PhaserGame
-  style={{ height: "100%", width: "100%" }}
+  id="demo-game"
+  style={{
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  }}
   config={{
-    type: Phaser.AUTO,
-    scale: DemoScene.Scaling,
-    transparent: false,
-    // backgroundColor: "#00FF00",
+    // backgroundColor: "0x00FF00",
   }}
 />
 
@@ -21,6 +23,10 @@ const {} = Astro.props;
   import { PhaserGameDivElement } from "../../components/PhaserGameElement";
   import DemoScene from "./DemoScene";
 
-  const element = document.getElementById("demo-game") as PhaserGameDivElement;
-  element.start("demo-game", new DemoScene(), true);
+  window.customElements.whenDefined(PhaserGameDivElement.HTML_TAG).then(() => {
+    const element = document.getElementById(
+      "demo-game"
+    ) as PhaserGameDivElement;
+    element.start("demo-game", new DemoScene(), true);
+  });
 </script>

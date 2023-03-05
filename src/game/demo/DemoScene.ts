@@ -29,21 +29,30 @@ export default class DemoScene extends BaseScene {
   protected cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
   constructor() {
-    super("Demo");
+    super({
+      // type: Phaser.AUTO,
+      // scale: DemoScene.Scaling,
+      // transparent: false,
+      // backgroundColor: "#00FF00",
+    });
   }
 
   init() {
+    super.init();
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   preload() {
+    super.preload();
     this.load.spritesheet({
+      url: "/sprites/basictiles.png",
       key: "tilesheet" as TextureKey,
       frameConfig: { frameWidth: 16, frameHeight: 16 },
     });
   }
 
   create() {
+    super.create();
     this.world = createWorld();
 
     this.systems.sprite = mkSpriteSystem(this, TextureIds);
@@ -54,9 +63,14 @@ export default class DemoScene extends BaseScene {
   }
 
   update(t: number, dt: number) {
+    super.update(t, dt);
     if (!this.world) return;
 
     this.systems.sprite(this.world);
+  }
+
+  destroy() {
+    super.destroy();
   }
 
   addTile(x: number, y: number) {
