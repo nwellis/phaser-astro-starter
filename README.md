@@ -21,7 +21,7 @@ _Not installed, but highly recommended!_
 
 Astro is a lightweight but powerful build tool that can add a lot of features. You can easily mix and
 match normal web pages with your game, or even write your game UI in HTML with ease. Not interested in
-using Astro? Here's a more applicable starter that provides a much of the tooling that Astro does
+using Astro? Here's a more applicable starter that provides much of the tooling that Astro does
 without those pesky opinions!
 
 [https://github.com/ourcade/phaser3-typescript-vite-template](https://github.com/ourcade/phaser3-typescript-vite-template).
