@@ -34,9 +34,15 @@ Inside of your Astro project, you'll see the following folders and files:
 /
 ├── public/
 │   └── favicon.svg
+│   └── assets/sprites
+│   │   └── basictiles.png
 ├── src/
 │   ├── components/
-│   │   └── Card.astro
+│   │   └── PhaserGame.astro
+│   │   └── PhaserGame.element.ts
+│   ├── game/
+│   │   ├── _common/*
+│   │   └── demo/*
 │   ├── layouts/
 │   │   └── Layout.astro
 │   └── pages/
