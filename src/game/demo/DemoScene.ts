@@ -1,9 +1,19 @@
 import Phaser from "phaser";
 import BaseScene from "game/_common/BaseScene";
-import { addComponent, addEntity, createWorld, IWorld, System } from "bitecs";
+import {
+  addComponent,
+  addEntity,
+  createWorld,
+  IWorld,
+  pipe,
+  System,
+} from "bitecs";
 import { Position, Rotation, Velocity } from "game/_common/components/Physics";
-import { Sprite } from "game/_common/components/Sprite";
-import { mkSpriteSystem } from "game/_common/systems/Sprite";
+import { Sprite, SpriteTile } from "game/_common/components/Sprite";
+import {
+  mkSpriteSystem,
+  mkSpriteTileSystem,
+} from "game/_common/systems/Sprite";
 
 function invertKvp(record: Record<string, number> = {}) {
   return Object.keys(record).reduce((inverted, strKey) => {
@@ -14,7 +24,6 @@ function invertKvp(record: Record<string, number> = {}) {
 
 export const TextureIds = {
   tilesheet: 0,
-  foobar: 1,
 };
 export type TextureKey = keyof typeof TextureIds;
 
@@ -58,6 +67,7 @@ export default class DemoScene extends BaseScene {
     this.load.spritesheet({
       url: "/sprites/basictiles.png",
       key: "tilesheet" as TextureKey,
+
       frameConfig: { frameWidth: 16, frameHeight: 16 },
     });
   }
@@ -66,11 +76,12 @@ export default class DemoScene extends BaseScene {
     super.create();
     this.world = createWorld();
 
-    this.systems.sprite = mkSpriteSystem(this, invertKvp(TextureIds));
+    this.systems.sprite = pipe(
+      mkSpriteSystem(this, invertKvp(TextureIds)),
+      mkSpriteTileSystem(this, invertKvp(TextureIds))
+    );
 
     this.addTile(this.scale.width / 2, this.scale.height / 2);
-
-    console.log(this.world);
   }
 
   update(t: number, dt: number) {
@@ -93,5 +104,11 @@ export default class DemoScene extends BaseScene {
 
     addComponent(this.world, Sprite, tile);
     Sprite.textureId[tile] = 0;
+
+    addComponent(this.world, SpriteTile, tile);
+    // SpriteTile.frames[tile] = Uint8Array.of(0);
+    // SpriteTile.frameCount[tile] = 1;
+    SpriteTile.frames[tile] = Uint8Array.of(4, 5);
+    SpriteTile.frameCount[tile] = 2;
   }
 }
